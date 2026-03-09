@@ -75,7 +75,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
-                            "/login"
+                            "/login",
+                            "/register"
                     ).permitAll();
                     registry.requestMatchers(
                             "/sell"
