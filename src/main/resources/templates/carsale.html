@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/carsale.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="top-container">
+    <h2 class="page-title"><span class="orange">Car</span>Ket</h2>
+    <div class="buttons">
+        <i class="fa-solid fa-money-bill" style="color: rgb(234, 123, 16);"></i>
+        <i class="fa-solid fa-magnifying-glass" style="color: rgb(234, 123, 16);"></i>
+    </div>
+</div>
+<h2 class="hero-title">List it. <span class="orange">Sell it.</span> Drive away. </h2>
+<div class="sale-form">
+    <label class="sale-label">Brand</label>
+    <input class="sale-input" type="text" id="carBrand">
+    <label class="sale-label">Model</label>
+    <input class="sale-input" type="text" id="carModel">
+    <label class="sale-label">Chassis Type</label>
+    <select class="sale-input" id="carChassis">
+        <option value="" disabled selected>Select chassis type</option>
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="hatchback">Hatchback</option>
+        <option value="coupe">Coupe</option>
+        <option value="convertible">Convertible</option>
+        <option value="wagon">Station Wagon</option>
+        <option value="pickup">Pickup Truck</option>
+        <option value="van">Van / Minivan</option>
+    </select>
+    <label class="sale-label">Year</label>
+    <input class="sale-input" type="number" id="carYear">
+    <label class="sale-label">Price</label>
+    <input class="sale-input" type="number" id="carPrice">
+    <button class="publish-button">Publish</button>
+</div>
+</body>
+</html>

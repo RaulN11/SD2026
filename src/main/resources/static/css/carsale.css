@@ -1,0 +1,72 @@
+.hero-title{
+    font-family: "Oswald", sans-serif;
+    margin-left: 420px;
+    padding: 0;
+    font-size: 40px;
+}
+.orange{
+    color: orange;
+}
+.sale-form {
+    background-color: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(15px);
+    min-width: 400px;
+    width: 40%;
+    justify-self: center;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sale-label {
+    font-family: "Oswald", sans-serif;
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.sale-input {
+    font-family: "Oswald", sans-serif;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.sale-input:focus {
+    outline: none;
+    border-color: rgb(234, 123, 16);
+    box-shadow: 0 0 8px rgba(234, 123, 16, 0.4);
+}
+
+.publish-button {
+    font-family: "Oswald", sans-serif;
+    background-color: rgb(234, 123, 16);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.publish-button:hover {
+    background-color: #cc6a0e;
+}
+
+.publish-button:active {
+    transform: scale(0.98);
+}
