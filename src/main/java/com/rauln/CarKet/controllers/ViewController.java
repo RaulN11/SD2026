@@ -9,4 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class ViewController {
+    @GetMapping("/salepage")
+    public String salepage(Model model){
+        return "carsale";
+    }
 }

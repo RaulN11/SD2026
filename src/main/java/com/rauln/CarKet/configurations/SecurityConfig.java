@@ -76,7 +76,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
                             "/login",
-                            "/register"
+                            "/register",
+                            "/salepage"
                     ).permitAll();
                     registry.requestMatchers(
                             "/sell"
