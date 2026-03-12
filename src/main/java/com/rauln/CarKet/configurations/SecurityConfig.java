@@ -77,7 +77,10 @@ public class SecurityConfig {
                     registry.requestMatchers(
                             "/login",
                             "/register",
-                            "/salepage"
+                            "/salepage",
+                            "/*.css",
+                            "/*.js",
+                            "/car/api/*"
                     ).permitAll();
                     registry.requestMatchers(
                             "/sell"
