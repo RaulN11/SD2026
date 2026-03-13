@@ -19,7 +19,5 @@ public class Car {
     private String brand;
     private String model;
     private String chassis;
-    private int year;
-    private int price;
 }
 

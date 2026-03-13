@@ -12,12 +12,12 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("SELECT c FROM Car c WHERE "+
             "(:brand IS NULL OR c.brand = :brand) AND " +
             "(:model IS NULL OR c.model = :model) AND " +
-            "(:chassis IS NULL OR c.chassis = :chassis) AND " +
-            "(:year IS NULL OR c.year = :year)")
+            "(:chassis IS NULL OR c.chassis = :chassis) "
+    )
     List<Car>searchCars(@Param("brand") String brand,
                         @Param("model") String model,
-                        @Param("chassis") String chassis,
-                        @Param("year") Integer year);
+                        @Param("chassis") String chassis
+                        );
 
 
 }

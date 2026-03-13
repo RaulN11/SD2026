@@ -17,16 +17,6 @@ public class CarController {
     public Car addCar(@RequestBody Car car){
         return carService.saveCar(car);
     }
-
-    @GetMapping("/search")
-    public List<Car> searchCars(
-            @RequestParam(required = false) String brand,
-            @RequestParam(required = false) String model,
-            @RequestParam(required = false) String chassis,
-            @RequestParam(required = false) Integer year
-    ){
-        return carService.searchCars(brand, model, chassis, year);
-    }
     @DeleteMapping("/delete/{id}")
     public void deleteCar(@PathVariable Long id){
         carService.deleteCar(id);

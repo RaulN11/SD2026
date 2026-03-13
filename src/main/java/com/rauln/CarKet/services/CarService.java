@@ -17,7 +17,7 @@ public class CarService {
     public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
-    public List<Car> searchCars(String brand, String model, String chassis, Integer year){
-        return carRepository.searchCars(brand, model, chassis, year);
+    public List<Car> searchCars(String brand, String model, String chassis){
+        return carRepository.searchCars(brand, model, chassis);
     }
 }
