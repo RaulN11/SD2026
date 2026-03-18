@@ -20,4 +20,13 @@ public class CarService {
     public List<Car> searchCars(String brand, String model, String chassis){
         return carRepository.searchCars(brand, model, chassis);
     }
+    public Car findOrCreateCar(Car car){
+        List<Car> result = searchCars(car.getBrand(), car.getModel(), car.getChassis());
+        if(result.isEmpty()){
+            return saveCar(car);
+        }
+        else{
+            return result.get(0);
+        }
+    }
 }

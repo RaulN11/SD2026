@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +17,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -30,10 +31,11 @@ public class SecurityConfig {
     private final UserService userService;
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        return userService;
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -62,8 +64,10 @@ public class SecurityConfig {
     public SecurityFilterChain securtyFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .authenticationProvider(authenticationProvider())
                 .formLogin(httpForm ->{
                     httpForm.loginPage("/login").permitAll();
+                    httpForm.loginProcessingUrl("/login-submit");
                     httpForm.defaultSuccessUrl("/homepage");
                     httpForm.failureHandler(authenticationFailureHandler());
                 })

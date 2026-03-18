@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "cars")
+@Table(name = "car")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +19,10 @@ public class Car {
     private String brand;
     private String model;
     private String chassis;
+    public Car(String brand, String model, String chassis){
+        this.brand = brand;
+        this.model = model;
+        this.chassis = chassis;
+    }
 }
 
