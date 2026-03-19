@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register - CarKet</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <h2>Log in your CarKet Account</h2>
+    <h2 class="hero-title">Log in your <span class="orange">CarKet</span> Account</h2>
 
-    <form th:action="@{/login}" method="post">
-        <input type="email" name="username" placeholder="Email Address" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
+    <form class="custom-form" th:action="@{/login}" method="post">
+        <label class="custom-label">Email Address</label>
+        <input class="custom-input" type="email" name="username" placeholder="Email Address" required>
+        <label class="custom-label">Password</label>
+        <input class="custom-input" type="password" name="password" placeholder="Password" required>
+        <button class ="custom-button" type="submit">Login</button>
     </form>
-    <div th:if="${param.error}" style="color: red">
-        Invalid email or password.
+    <div class="footer">
+        <div th:if="${param.error}" style="color: red">
+            Invalid email or password.
+        </div>
+        <p>New here?? <a href="/register">Create an account here</a></p>
     </div>
-    <p>New here?? <a href="/register">Create an account here</a></p>
 </body>
 </html>

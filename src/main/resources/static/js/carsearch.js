@@ -15,5 +15,5 @@ document.querySelector('.custom-button').addEventListener('click', () =>{
         if (!response.ok) throw new Error("Search error");
         return response.json();
     })
-    .catch(error => console.error('Eroare:', error));
+    .catch(error => console.error('Error:', error));
 });

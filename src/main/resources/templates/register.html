@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register - CarKet</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<h2>Create your CarKet Account</h2>
+<h2 class="hero-title">Create your <span class="orange">CarKet</span> Account</h2>
 
 <p th:if="${error}" th:text="${error}" style="color: red;"></p>
 
-<form th:action="@{/register}" method="post">
-    <input type="text" name="firstName" placeholder="First Name" required><br>
-    <input type="text" name="lastName" placeholder="Last Name" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <button type="submit">Register</button>
+<form class="custom-form" th:action="@{/register}" method="post">
+    <label class="custom-label">First Name</label>
+    <input class="custom-input" type="text" name="firstName" placeholder="First Name" required><br>
+    <label class="custom-label">Last Name</label>
+    <input class="custom-input" type="text" name="lastName" placeholder="Last Name" required><br>
+    <label class="custom-label">Email</label>
+    <input class="custom-input" type="email" name="email" placeholder="Email" required><br>
+    <label class="custom-label">Password</label>
+    <input class="custom-input" type="password" name="password" placeholder="Password" required><br>
+    <button class="custom-button" type="submit">Register</button>
 </form>
-
-<p>Already have an account? <a href="/login">Login here</a></p>
+<div class="footer">
+    <p>Already have an account? <a href="/login">Login here</a></p>
+</div>
 </body>
 </html>
