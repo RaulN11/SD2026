@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/css/carsale.css">
-    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/static/css/carsearch.css">
+    <link rel="stylesheet" href="/static/css/common.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
@@ -18,14 +18,15 @@
         <i class="fa-solid fa-magnifying-glass" style="color: rgb(234, 123, 16);"></i>
     </div>
 </div>
-<h2 class="hero-title">List it. <span class="orange">Sell it.</span> Drive away. </h2>
-<div class="sale-form">
-    <label class="sale-label">Brand</label>
-    <input class="sale-input" type="text" id="carBrand">
-    <label class="sale-label">Model</label>
-    <input class="sale-input" type="text" id="carModel">
-    <label class="sale-label">Chassis Type</label>
-    <select class="sale-input" id="carChassis">
+</body>
+<h2 class="hero-title">Search for your <span class="orange">next car.</span></h2>
+<div class="custom-form">
+    <label class="custom-label">Brand</label>
+    <input class="custom-input" type= "text" id="carBrand">
+    <label class="custom-label">Model</label>
+    <input class="custom-input" type= "text" id="carModel">
+    <label class="custom-label">Chassis</label>
+    <select class="custom-input" id="carChassis">
         <option value="" disabled selected>Select chassis type</option>
         <option value="sedan">Sedan</option>
         <option value="suv">SUV</option>
@@ -36,14 +37,7 @@
         <option value="pickup">Pickup Truck</option>
         <option value="van">Van / Minivan</option>
     </select>
-    <label class="sale-label">Year</label>
-    <input class="sale-input" type="number" id="carYear">
-    <label class="sale-label">Price</label>
-    <input class="sale-input" type="number" id="carPrice">
-    <label class="sale-label">Image</label>
-    <input class="sale-input" type="file" id="carImage" accept="image/*">
-    <button class="publish-button">Publish</button>
+    <button class="custom-button">Search</button>
 </div>
-</body>
-<script src="/js/carsale.js"></script>
+<script src="/js/carsearch.js"></script>
 </html>

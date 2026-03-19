@@ -7,7 +7,12 @@ import com.rauln.CarKet.model.User;
 import com.rauln.CarKet.repositories.AdvertisementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,7 +38,7 @@ public class AdvertisementService {
         List<Car> cars = carService.searchCars(brand, model, chassis);
         return advertisementRepository.findAdvertisementsByCarIn(cars);
     }
-    public Advertisement publishAd(String email, AdRequestDTO requestBody){
+    public Advertisement publishAd(String email, AdRequestDTO requestBody, MultipartFile image) throws IOException {
         User user = userService.loadByEmail(email);
         Car car = carService.findOrCreateCar(new Car(
                 requestBody.getBrand(),
@@ -45,6 +50,18 @@ public class AdvertisementService {
         advertisement.setUser(user);
         advertisement.setYear(requestBody.getYear());
         advertisement.setPrice(requestBody.getPrice());
+
+        if(image != null && !image.isEmpty()){
+            String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+            Path uploadPath = Paths.get("src/main/resources/static/uploads/");
+            if(!Files.exists(uploadPath)){
+                Files.createDirectories(uploadPath);
+            }
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(image.getInputStream(), filePath);
+            advertisement.setImages(List.of("/uploads/" +fileName));
+        }
+
         return save_ad(advertisement);
     }
 

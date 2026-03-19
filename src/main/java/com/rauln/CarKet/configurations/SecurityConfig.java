@@ -67,8 +67,8 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .formLogin(httpForm ->{
                     httpForm.loginPage("/login").permitAll();
-                    httpForm.loginProcessingUrl("/login-submit");
-                    httpForm.defaultSuccessUrl("/homepage");
+                    httpForm.loginProcessingUrl("/login");
+                    httpForm.defaultSuccessUrl("/salepage");
                     httpForm.failureHandler(authenticationFailureHandler());
                 })
                 .sessionManagement(session -> session

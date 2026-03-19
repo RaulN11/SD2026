@@ -1,3 +1,40 @@
+body {
+    background: linear-gradient(135deg, #c69884 0%, #464655 100%);
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+}
+.top-container{
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(64, 58, 56, 0.8) 0%, rgba(70, 70, 85, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.page-title{
+    font-size: 50px;
+    padding: 0;
+    margin: 0 0 0 20px;
+}
+.fa-money-bill{
+    font-size: 25px;
+}
+.fa-magnifying-glass{
+    font-size: 25px;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    padding-right: 30px;
+}
 .hero-title{
     font-family: "Oswald", sans-serif;
     margin-left: 420px;
@@ -7,7 +44,7 @@
 .orange{
     color: orange;
 }
-.sale-form {
+.custom-form {
     background-color: rgba(20, 20, 20, 0.6);
     backdrop-filter: blur(15px);
     min-width: 400px;
@@ -22,8 +59,7 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-.sale-label {
+.custom-label {
     font-family: "Oswald", sans-serif;
     color: #ffffff;
     font-size: 18px;
@@ -31,7 +67,7 @@
     letter-spacing: 1px;
 }
 
-.sale-input {
+.custom-input {
     font-family: "Oswald", sans-serif;
     padding: 12px 15px;
     margin-bottom: 20px;
@@ -42,13 +78,12 @@
     transition: all 0.3s ease;
 }
 
-.sale-input:focus {
+.custom-input:focus {
     outline: none;
     border-color: rgb(234, 123, 16);
     box-shadow: 0 0 8px rgba(234, 123, 16, 0.4);
 }
-
-.publish-button {
+.custom-button {
     font-family: "Oswald", sans-serif;
     background-color: rgb(234, 123, 16);
     color: white;
@@ -63,10 +98,10 @@
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-.publish-button:hover {
+.custom-button:hover {
     background-color: #cc6a0e;
 }
 
-.publish-button:active {
+.custom-button:active {
     transform: scale(0.98);
 }

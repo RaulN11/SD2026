@@ -1,4 +1,4 @@
-document.querySelector('.publish-button').addEventListener('click', () =>{
+document.querySelector('.custom-button').addEventListener('click', () =>{
     const carData = {
         brand: document.getElementById('carBrand').value,
         model: document.getElementById('carModel').value,
@@ -6,12 +6,17 @@ document.querySelector('.publish-button').addEventListener('click', () =>{
         year: parseInt(document.getElementById('carYear').value),
         price: parseInt(document.getElementById('carPrice').value)
     }
-    fetch('/car/api/add',{
+
+    const formData = new FormData();
+    formData.append('adData', new Blob([JSON.stringify(carData)], {type: 'application/json'}));
+
+    const imageFile = document.getElementById('carImage').files[0];
+    if(imageFile){
+        formData.append('image', imageFile);
+    }
+    fetch('/ad/api/publish',{
         method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify(carData)
+        body: formData
     })
     .then(response => {
         if(response.ok){
