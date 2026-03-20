@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="top-container">
+  <h2 class="page-title"><span class="orange">Car</span>Ket</h2>
+  <div class="buttons">
+    <a href="/salepage"><i class="fa-solid fa-money-bill" style="color: rgb(234, 123, 16);"></i></a>
+    <a href="/searchpage"> <i class="fa-solid fa-magnifying-glass" style="color: rgb(234, 123, 16);"></i></a>
+  </div>
+</div>
+<h2 class="hero-title">Your <span class="orange">results:</span></h2>
+<div class="custom-grid">
+  <div class="custom-ad" th:each="ad: ${ads}">
+    <h3 th:text="${ad.car.brand} + ' ' + ${ad.car.model}" class="orange">Brand Model</h3>
+    <img th:if="${!#lists.isEmpty(ad.images)}"
+         th:src="@{${ad.images[0]}}"
+         style="max-width: 100%; border-radius: 6px;" alt="Car Image"/>
+    <p class="custom-label" th:text="${ad.price} + '$'"></p>
+    <p class="custom-label" th:text="${ad.year}"></p>
+  </div>
+</div>
+</body>
+</html>

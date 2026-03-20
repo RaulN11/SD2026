@@ -117,3 +117,43 @@ a{
 a:hover{
     color: #cc6a0e;
 }
+.custom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px 5%;
+    margin-top: 20px;
+}
+.custom-ad {
+    background-color: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.custom-ad:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.custom-ad img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.custom-ad h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.custom-ad p.custom-label {
+    margin-bottom: 8px;
+}

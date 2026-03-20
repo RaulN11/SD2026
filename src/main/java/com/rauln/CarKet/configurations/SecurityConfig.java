@@ -82,8 +82,9 @@ public class SecurityConfig {
                             "/login",
                             "/register",
                             "/salepage",
-                            "/*.css",
-                            "/*.js",
+                            "/css/**",
+                            "/js/**",
+                            "/uploads/**",
                             "/car/api/*"
                     ).permitAll();
                     registry.requestMatchers(
