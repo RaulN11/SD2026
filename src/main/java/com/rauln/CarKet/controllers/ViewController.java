@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/")
-public class ViewController {
+public class    ViewController {
     private final AdvertisementService advertisementService;
 
     @GetMapping("/salepage")
@@ -34,11 +34,8 @@ public class ViewController {
     }
     @GetMapping("/addetails/{id}")
     public String adDetailsPage(@PathVariable Long id, Model model) {
-        Advertisement ad = advertisementService.loadAllAds().stream()
-                .filter(a -> a.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Ad not found"));
-
+        Advertisement ad = advertisementService.loadAdById(id);
+        if (ad == null) { throw new RuntimeException("Ad not found"); }
         model.addAttribute("ad", ad);
         return "addetails";
     }
