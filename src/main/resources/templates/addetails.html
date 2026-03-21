@@ -25,13 +25,34 @@
   <p class="custom-label" th:text="'Price: $' + ${ad.price}"></p>
   <p class="custom-label" th:text="'Chassis: ' + ${ad.car.chassis}"></p>
 
-  <div class="action-buttons">
-    <a th:href="@{/ad/edit/{id}(id=${ad.id})}" class="custom-button">Edit</a>
+  <div class="action-buttons" th:if="${#authentication.name == ad.user.email or #authorization.expression('hasRole(''ADMIN'')')}">
 
-    <form th:action="@{/ad/delete/{id}(id=${ad.id})}" method="delete">
+    <button th:if="${#authentication.name == ad.user.email}" type="button" class="custom-button" onclick="openModal()">Edit Price</button>
+
+    <form th:action="@{/ad/api/delete/{id}(id=${ad.id})}" th:method="delete">
       <button type="submit" class="custom-button btn-delete" onclick="return confirm('Delete this ad?');">Delete</button>
     </form>
   </div>
 </div>
+
+<div id="priceModal" class="modal">
+  <div class="modal-content custom-form">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 class="orange">Edit Price</h2>
+    <form th:action="@{/ad/api/update/{id}(id=${ad.id})}" method="post">
+      <label class="custom-label">New Price</label>
+      <input class="custom-input" type="number" name="price" th:value="${ad.price}" required>
+      <button type="submit" class="custom-button" style="width: 100%;">Save</button>
+    </form>
+  </div>
+</div>
+<script>
+  var modal = document.getElementById("priceModal");
+  function openModal() { modal.style.display = "block"; }
+  function closeModal() { modal.style.display = "none"; }
+  window.onclick = function(event) {
+    if (event.target == modal) { modal.style.display = "none"; }
+  }
+</script>
 </body>
 </html>

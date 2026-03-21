@@ -74,4 +74,14 @@ public class AdvertisementService {
         return saveAd(advertisement);
     }
 
+    public void updateAdPriceSecured(Long id, Integer newPrice, String userEmail) {
+        Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
+        if (advertisement.getUser().getEmail().equals(userEmail) ) {
+            advertisement.setPrice(newPrice);
+            advertisementRepository.save(advertisement);
+        } else {
+            throw new AccessDeniedException("You can only edit your own ads.");
+        }
+    }
+
 }

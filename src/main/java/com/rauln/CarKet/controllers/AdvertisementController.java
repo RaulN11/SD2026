@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -57,13 +58,21 @@ public class AdvertisementController {
     }
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
-    public String deleteAd(@PathVariable Long id, Authentication authentication){
+    public RedirectView deleteAd(@PathVariable Long id, Authentication authentication){
         boolean isAdmin = authentication
                 .getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority()
                         .equals("ROLE_ADMIN"));
         advertisementService.deleteAdSecured(id, authentication.getName(), isAdmin);
-        return "redirect:/searchpage";
+
+        return new RedirectView("/searchpage");
+    }
+
+    @PostMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('CLIENT')")
+    public RedirectView updateAdPrice(@PathVariable Long id, @RequestParam Integer price, Authentication authentication) {
+        advertisementService.updateAdPriceSecured(id, price, authentication.getName());
+        return new RedirectView("/addetails/" + id);
     }
 }
