@@ -35,7 +35,7 @@ public class RegistrationController {
 
         }catch (UsernameNotFoundException ex){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRole("ROLE_CLIENT");
+            user.setRole("ROLE_" + user.getRole().toUpperCase());
             userService.saveUser(user);
             return "redirect:/login";
         }

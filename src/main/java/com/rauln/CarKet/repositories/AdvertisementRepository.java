@@ -9,4 +9,5 @@ import java.util.List;
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     public List<Advertisement> findAdvertisementsByUserId(Long userId);
     public List<Advertisement> findAdvertisementsByCarIn(List<Car> cars);
+    public Advertisement findAdvertisementById(Long id);
 }

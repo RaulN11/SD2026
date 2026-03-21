@@ -85,11 +85,8 @@ public class SecurityConfig {
                             "/css/**",
                             "/js/**",
                             "/uploads/**",
-                            "/car/api/*"
+                            "/ad/api/search"
                     ).permitAll();
-                    registry.requestMatchers(
-                            "/sell"
-                    ).authenticated();
                     registry.anyRequest().authenticated();
                 })
                 .build();
