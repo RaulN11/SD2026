@@ -9,6 +9,7 @@ import com.rauln.CarKet.services.AdvertisementService;
 import com.rauln.CarKet.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,19 @@ public class AdvertisementController {
 
     @PostMapping(value = "/publish", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('CLIENT')")
-    public Advertisement publishAd(Principal principal,
-                                   @RequestPart("adData") AdRequestDTO requestBody,
-                                   @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
-       return advertisementService.publishAd(principal.getName(), requestBody, image);
+    public ResponseEntity<?> publishAd(Principal principal,
+                                    @RequestPart("adData") AdRequestDTO requestBody,
+                                    @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+        if(requestBody.getBrand() == null ||
+           requestBody.getModel() == null ||
+           requestBody.getChassis() == null ||
+           requestBody.getYear() == null ||
+           requestBody.getPrice() == null
+        ){
+            return ResponseEntity.badRequest().body("All fields must be completed");
+        }
+        Advertisement ad = advertisementService.publishAd(principal.getName(), requestBody, image);
+        return ResponseEntity.ok(ad);
 
     }
     @GetMapping("/findby/{id}")
@@ -47,12 +57,13 @@ public class AdvertisementController {
     }
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
-    public void deleteAd(@PathVariable Long id, Authentication authentication){
+    public String deleteAd(@PathVariable Long id, Authentication authentication){
         boolean isAdmin = authentication
                 .getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority()
                         .equals("ROLE_ADMIN"));
         advertisementService.deleteAdSecured(id, authentication.getName(), isAdmin);
+        return "redirect:/searchpage";
     }
 }

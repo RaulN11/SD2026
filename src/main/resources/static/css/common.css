@@ -157,3 +157,29 @@ a:hover{
 .custom-ad p.custom-label {
     margin-bottom: 8px;
 }
+
+.single-ad-container {
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.single-ad-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.btn-delete {
+    background-color: #ff4444;
+}
+
+.btn-delete:hover {
+    background-color: #cc0000;
+}

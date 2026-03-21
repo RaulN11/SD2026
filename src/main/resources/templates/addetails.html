@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ad Details</title>
+  <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="top-container">
+  <h2 class="page-title"><span class="orange">Car</span>Ket</h2>
+  <div class="buttons">
+    <a href="/salepage"><i class="fa-solid fa-money-bill" style="color: rgb(234, 123, 16);"></i></a>
+    <a href="/searchpage"> <i class="fa-solid fa-magnifying-glass" style="color: rgb(234, 123, 16);"></i></a>
+  </div>
+</div>
+
+<div class="custom-form single-ad-container">
+
+  <h2 class="orange" th:text="${ad.car.brand} + ' ' + ${ad.car.model}">Brand Model</h2>
+
+  <img class="single-ad-image" th:if="${!#lists.isEmpty(ad.images)}"
+       th:src="@{${ad.images[0]}}" alt="Car Image"/>
+
+  <p class="custom-label" th:text="'Year: ' + ${ad.year}"></p>
+  <p class="custom-label" th:text="'Price: $' + ${ad.price}"></p>
+  <p class="custom-label" th:text="'Chassis: ' + ${ad.car.chassis}"></p>
+
+  <div class="action-buttons">
+    <a th:href="@{/ad/edit/{id}(id=${ad.id})}" class="custom-button">Edit</a>
+
+    <form th:action="@{/ad/delete/{id}(id=${ad.id})}" method="delete">
+      <button type="submit" class="custom-button btn-delete" onclick="return confirm('Delete this ad?');">Delete</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

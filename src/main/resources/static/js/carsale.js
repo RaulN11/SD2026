@@ -1,12 +1,20 @@
 document.querySelector('.custom-button').addEventListener('click', () =>{
-    const carData = {
-        brand: document.getElementById('carBrand').value,
-        model: document.getElementById('carModel').value,
-        chassis: document.getElementById('carChassis').value,
-        year: parseInt(document.getElementById('carYear').value),
-        price: parseInt(document.getElementById('carPrice').value)
+    const brand = document.getElementById('carBrand').value;
+    const model = document.getElementById('carModel').value;
+    const chassis = document.getElementById('carChassis').value;
+    const year = document.getElementById('carYear').value;
+    const price = document.getElementById('carPrice').value;
+    if(!brand || !model || !chassis || !year || !price){
+        alert("Please fill all fields!");
+        return;
     }
-
+    const carData ={
+        brand: brand,
+        model: model,
+        chassis: chassis,
+        year: year,
+        price: price
+    }
     const formData = new FormData();
     formData.append('adData', new Blob([JSON.stringify(carData)], {type: 'application/json'}));
 

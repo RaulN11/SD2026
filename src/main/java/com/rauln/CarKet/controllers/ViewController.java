@@ -5,10 +5,7 @@ import com.rauln.CarKet.services.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RequiredArgsConstructor
@@ -34,5 +31,15 @@ public class ViewController {
         List<Advertisement> foundAds = advertisementService.loadAdsByCar(brand, model, chassis);
         m1.addAttribute("ads", foundAds);
         return "resultspage";
+    }
+    @GetMapping("/addetails/{id}")
+    public String adDetailsPage(@PathVariable Long id, Model model) {
+        Advertisement ad = advertisementService.loadAllAds().stream()
+                .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Ad not found"));
+
+        model.addAttribute("ad", ad);
+        return "addetails";
     }
 }
