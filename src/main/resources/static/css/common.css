@@ -29,6 +29,9 @@ body {
 .fa-magnifying-glass{
     font-size: 25px;
 }
+.fa-user{
+    font-size: 25px;
+}
 .buttons{
     display: flex;
     flex-direction: row;

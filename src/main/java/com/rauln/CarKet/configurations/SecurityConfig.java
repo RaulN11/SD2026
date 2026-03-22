@@ -83,6 +83,7 @@ public class SecurityConfig {
                             "/register",
                             "/searchpage",
                             "/resultspage",
+                            "/addetails/*",
                             "/css/**",
                             "/js/**",
                             "/uploads/**",
