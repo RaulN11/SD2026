@@ -21,7 +21,7 @@
 <h2 class="hero-title">Your <span class="orange">results:</span></h2>
 <div class="custom-grid">
   <a th:each="ad : ${ads}" th:href="@{/addetails/{id}(id=${ad.id})}">
-    <div class="custom-ad" th:each="ad: ${ads}">
+    <div class="custom-ad">
       <h3 th:text="${ad.car.brand} + ' ' + ${ad.car.model}" class="orange">Brand Model</h3>
       <img th:if="${!#lists.isEmpty(ad.images)}"
            th:src="@{${ad.images[0]}}"

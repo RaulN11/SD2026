@@ -20,6 +20,7 @@ target/
 *.ipr
 .env
 /src/main/resources/application.properties
+/src/main/resources/static/uploads
 
 ### NetBeans ###
 /nbproject/private/
