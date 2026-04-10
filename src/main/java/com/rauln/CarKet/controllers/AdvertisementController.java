@@ -1,13 +1,16 @@
 package com.rauln.CarKet.controllers;
 
 import com.rauln.CarKet.dto.AdRequestDTO;
+import com.rauln.CarKet.export.ExportStrategyInterface;
 import com.rauln.CarKet.model.Advertisement;
 import com.rauln.CarKet.model.Car;
 import com.rauln.CarKet.model.User;
 import com.rauln.CarKet.repositories.AdvertisementRepository;
 import com.rauln.CarKet.services.AdvertisementService;
+import com.rauln.CarKet.services.ExportService;
 import com.rauln.CarKet.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +29,7 @@ import java.util.List;
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
     private final UserService userService;
+    private final ExportService exportService;
 
     @PostMapping(value = "/publish", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('CLIENT')")
@@ -74,5 +78,26 @@ public class AdvertisementController {
     public RedirectView updateAdPrice(@PathVariable Long id, @RequestParam Integer price, Authentication authentication) {
         advertisementService.updateAdPriceSecured(id, price, authentication.getName());
         return new RedirectView("/addetails/" + id);
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<String> exportAds(
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String chassis,
+            @RequestParam String format
+    ){
+        try {
+            List<Advertisement> adsToExport = advertisementService.loadAdsByCar(brand,model,chassis);
+            ExportStrategyInterface strategy = exportService.getStrategy(format);
+            String data = strategy.export(adsToExport);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=export"+strategy.getFileExtension())
+                    .contentType(MediaType.parseMediaType(strategy.getContentType()))
+                    .body(data);
+
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
