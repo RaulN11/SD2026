@@ -1,11 +1,13 @@
 package com.rauln.CarKet.services;
 
 import com.rauln.CarKet.dto.AdRequestDTO;
+import com.rauln.CarKet.model.AdCreatedEvent;
 import com.rauln.CarKet.model.Advertisement;
 import com.rauln.CarKet.model.Car;
 import com.rauln.CarKet.model.User;
 import com.rauln.CarKet.repositories.AdvertisementRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final CarService carService;
     private final UserService userService;
     private final FileStorageService fileStorageService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public Advertisement saveAd(Advertisement advertisement){
@@ -76,6 +79,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             String imageUrl = fileStorageService.saveFile(image);
             advertisement.setImages(List.of(imageUrl));
         }
+        AdCreatedEvent event = new AdCreatedEvent(email, car.getBrand(), car.getModel(), advertisement.getPrice());
+        eventPublisher.publishEvent(event);
 
         return saveAd(advertisement);
     }
