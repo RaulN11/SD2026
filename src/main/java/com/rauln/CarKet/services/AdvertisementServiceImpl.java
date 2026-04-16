@@ -1,10 +1,7 @@
 package com.rauln.CarKet.services;
 
 import com.rauln.CarKet.dto.AdRequestDTO;
-import com.rauln.CarKet.model.AdCreatedEvent;
-import com.rauln.CarKet.model.Advertisement;
-import com.rauln.CarKet.model.Car;
-import com.rauln.CarKet.model.User;
+import com.rauln.CarKet.model.*;
 import com.rauln.CarKet.repositories.AdvertisementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -38,6 +35,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         }else {
             throw new AccessDeniedException("You can only delete your own ads.");
         }
+        AdDeletedEvent event = new AdDeletedEvent(userEmail, advertisement.getCar().getBrand(), advertisement.getCar().getModel());
+        eventPublisher.publishEvent(event);
     }
 
     @Override

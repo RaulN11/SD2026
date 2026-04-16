@@ -18,7 +18,10 @@
     <a href="/ownads"><i class="fa-solid fa-user" style="color: rgb(234, 123, 16);"></i></a>
   </div>
 </div>
-<h2 class="hero-title">Your <span class="orange">results:</span></h2>
+<div class="upper-container">
+  <h2 class="hero-title">Your <span class="orange">results:</span></h2>
+  <button class="export-button" id="export-first">Export results</button>
+</div>
 <div class="custom-grid">
   <a th:each="ad : ${ads}" th:href="@{/addetails/{id}(id=${ad.id})}">
     <div class="custom-ad">
@@ -31,5 +34,21 @@
     </div>
   </a>
 </div>
+<div class="modal-overlay" id="modal-overlay">
+  <div class="export-modal" id="export-modal">
+    <button class="close-button" id = "close-button">&times;</button>
+    <h2 class="hero-title">Choose the exporting format</h2>
+    <div class="options">
+      <input type="radio" id="json" name="format" value="JSON">
+      <label for="json">JSON</label><br>
+      <input type="radio" id="xml" name="format" value="XML">
+      <label for="xml">XML</label><br>
+      <input type="radio" id="csv" name="format" value="CSV">
+      <label for="csv">CSV</label><br>
+    </div>
+    <button class="export-button" id="export-modal-button">Export</button>
+  </div>
+</div>
 </body>
+<script src="/js/carsale.js"></script>
 </html>

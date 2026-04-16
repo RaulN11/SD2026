@@ -38,11 +38,26 @@ body {
     gap: 50px;
     padding-right: 30px;
 }
+.upper-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .hero-title{
     font-family: "Oswald", sans-serif;
     padding: 0;
     font-size: 40px;
     justify-self: center;
+}
+.export-button{
+    font-family: "Oswald", sans-serif;
+    cursor: pointer;
+    background-color: orange;
+    border-radius: 10px;
+    font-size: 20px;
+    color: rgb(74, 72, 72);
+    border: rgb(74, 72, 72) ;
+    padding: 5px 10px 5px 10px;
 }
 .orange{
     color: orange;
@@ -218,4 +233,44 @@ a:hover{
 
 .close:hover {
     color: rgb(234, 123, 16);
+}
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+.export-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.options{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 40px;
+}
+.close-button{
+    background-color: transparent;
+    color: orange;
+    border: none;
+    outline: none;
+    font-size: 40px;
+    align-self: flex-end;
+    margin-right: 40px;
+    padding-top: 0;
 }
