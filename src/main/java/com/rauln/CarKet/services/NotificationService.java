@@ -1,8 +1,10 @@
 package com.rauln.CarKet.services;
 
+import com.rauln.CarKet.configurations.RabbitMQConfig;
 import com.rauln.CarKet.model.AdCreatedEvent;
 import com.rauln.CarKet.model.AdDeletedEvent;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
     @Autowired
     private JavaMailSender emailSender;
-    @EventListener
+    @RabbitListener(queues = RabbitMQConfig.AD_CREATED_QUEUE)
     public void sendUponAdCreated(AdCreatedEvent event){
         try {
             MimeMessage mailMessage = emailSender.createMimeMessage();
@@ -29,7 +31,7 @@ public class NotificationService {
         }
     }
 
-    @EventListener
+    @RabbitListener(queues = RabbitMQConfig.AD_DELETED_QUEUE)
     public void sendUponAdDeleted(AdDeletedEvent event){
         try {
             MimeMessage mailMessage = emailSender.createMimeMessage();
