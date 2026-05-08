@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/car/api")
 public class CarController {
     private final CarService carService;
 

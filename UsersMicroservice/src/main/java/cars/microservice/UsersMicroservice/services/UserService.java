@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public interface UserService extends UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;
     public User loadByEmail(String email);
+    public User loadById(Long id);
     public User saveUser(User user);
     public boolean verifyUser(String email, String rawPassword);
 }

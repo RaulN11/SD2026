@@ -13,5 +13,4 @@ public class AdRequestDTO {
     private String chassis;
     private Integer year;
     private Integer price;
-    private Long userId;
 }
