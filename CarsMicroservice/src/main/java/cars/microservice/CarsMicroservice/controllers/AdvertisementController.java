@@ -1,5 +1,9 @@
 package cars.microservice.CarsMicroservice.controllers;
 
+import cars.microservice.CarsMicroservice.commands.CommandInvoker;
+import cars.microservice.CarsMicroservice.commands.DeleteAdCommand;
+import cars.microservice.CarsMicroservice.commands.PublishCommand;
+import cars.microservice.CarsMicroservice.commands.UpdatePriceCommand;
 import cars.microservice.CarsMicroservice.dtos.AdRequestDTO;
 import cars.microservice.CarsMicroservice.dtos.AdResponseDTO;
 import cars.microservice.CarsMicroservice.dtos.CarResponseDTO;
@@ -30,13 +34,17 @@ public class AdvertisementController {
     private final AdvertisementCommandService commandService;
     private final AdvertisementQueryService queryService;
     private final ExportService exportService;
+    private final CommandInvoker commandInvoker;
 
     @PostMapping(value = "/publish", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> publishAd(@AuthenticationPrincipal String email,
                                        @RequestPart("adData") AdRequestDTO requestBody,
-                                       @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
-        return ResponseEntity.ok(convertToResponseDTO(commandService.publishAd(email, requestBody, image)));
+                                       @RequestPart(value = "image", required = false) MultipartFile image) throws Exception {
+
+        PublishCommand command = new PublishCommand(commandService, email, requestBody,image);
+        commandInvoker.execute(command);
+        return ResponseEntity.ok(convertToResponseDTO(command.getResult()));
     }
 
     @GetMapping("/search")
@@ -50,11 +58,11 @@ public class AdvertisementController {
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_CLIENT', 'ROLE_ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id,
-                                    @AuthenticationPrincipal String email) {
+                                    @AuthenticationPrincipal String email) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-        commandService.deleteAdSecured(id, email, isAdmin);
+        commandInvoker.execute(new DeleteAdCommand(commandService, id, email, isAdmin));
         return ResponseEntity.noContent().build();
     }
 
@@ -62,8 +70,8 @@ public class AdvertisementController {
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<AdResponseDTO> editPrice(@PathVariable Long id,
                                                    @RequestParam Integer price,
-                                                   @AuthenticationPrincipal String email) {
-        commandService.updateAdPriceSecured(id, price, email);
+                                                   @AuthenticationPrincipal String email) throws Exception {
+        commandInvoker.execute(new UpdatePriceCommand(commandService, id, price, email));
         return ResponseEntity.ok(convertToResponseDTO(queryService.loadAdById(id)));
     }
 
