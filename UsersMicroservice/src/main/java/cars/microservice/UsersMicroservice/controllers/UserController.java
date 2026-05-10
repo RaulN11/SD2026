@@ -53,8 +53,10 @@ public class UserController {
         return dto;
     }
     @GetMapping("/internal/by-email")
-    public UserResponseDTO getByEmail(@RequestParam String email, @RequestHeader("X-Internal-Secret")String secret, @Value("${internal.secret}") String expectedSecret){
-        if(!secret.equals(expectedSecret)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    public UserResponseDTO getByEmail(@RequestParam String email,
+                                      @RequestHeader("X-Internal-Secret") String secret,
+                                      @Value("${internal.secret}") String expectedSecret) {
+        if (!secret.equals(expectedSecret)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         return convertToResponseDTO(userService.loadByEmail(email));
     }
     @GetMapping("/internal/{id}")

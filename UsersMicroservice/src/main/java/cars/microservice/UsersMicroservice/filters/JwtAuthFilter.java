@@ -1,6 +1,5 @@
 package cars.microservice.UsersMicroservice.filters;
 
-import cars.microservice.UsersMicroservice.configurations.SecurityConfig;
 import cars.microservice.UsersMicroservice.services.JwtService;
 import cars.microservice.UsersMicroservice.services.UserService;
 import jakarta.servlet.FilterChain;

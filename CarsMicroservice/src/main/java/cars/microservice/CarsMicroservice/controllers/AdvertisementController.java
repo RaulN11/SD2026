@@ -34,29 +34,13 @@ public class AdvertisementController {
     private final ExportService exportService;
 
     @PostMapping(value = "/publish", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     public ResponseEntity<?> publishAd(
             @AuthenticationPrincipal String email,
             @RequestPart("adData") AdRequestDTO requestBody,
             @RequestPart(value = "image", required = false)MultipartFile image) throws IOException{
         Advertisement ad = advertisementService.publishAd(email, requestBody, image);
         return ResponseEntity.ok(convertToResponseDTO(ad));
-    }
-    private AdResponseDTO convertToResponseDTO(Advertisement ad) {
-        CarResponseDTO carDTO = new CarResponseDTO();
-        carDTO.setId(ad.getCar().getId());
-        carDTO.setBrand(ad.getCar().getBrand());
-        carDTO.setModel(ad.getCar().getModel());
-        carDTO.setChassis(ad.getCar().getChassis());
-
-        return new AdResponseDTO(
-                ad.getId(),
-                ad.getUserId(),
-                carDTO,
-                ad.getPrice(),
-                ad.getYear(),
-                ad.getImages()
-        );
     }
     @GetMapping("/search")
     public List<AdResponseDTO> search(
@@ -68,7 +52,7 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_CLIENT','ROLE_ADMIN')")
     public ResponseEntity<?> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal String email
@@ -81,7 +65,7 @@ public class AdvertisementController {
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     public ResponseEntity<AdResponseDTO> editPrice(
             @PathVariable Long id,
             @RequestParam Integer price,
@@ -109,6 +93,25 @@ public class AdvertisementController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+    private AdResponseDTO convertToResponseDTO(Advertisement ad) {
+        CarResponseDTO carDTO = new CarResponseDTO();
+        carDTO.setId(ad.getCar().getId());
+        carDTO.setBrand(ad.getCar().getBrand());
+        carDTO.setModel(ad.getCar().getModel());
+        carDTO.setChassis(ad.getCar().getChassis());
+
+        return new AdResponseDTO(
+                ad.getId(),
+                ad.getUserId(),
+                ad.getUserEmail(),
+                ad.getFirstName(),
+                ad.getLastName(),
+                carDTO,
+                ad.getPrice(),
+                ad.getYear(),
+                ad.getImages()
+        );
     }
 
 }

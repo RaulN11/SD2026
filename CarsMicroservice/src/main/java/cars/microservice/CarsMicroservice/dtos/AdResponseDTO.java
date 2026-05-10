@@ -12,6 +12,9 @@ import java.util.List;
 public class AdResponseDTO {
     private Long id;
     private Long userId;
+    private String userEmail;
+    private String firstName;
+    private String lastName;
     private CarResponseDTO car;
     private Integer price;
     private Integer year;
