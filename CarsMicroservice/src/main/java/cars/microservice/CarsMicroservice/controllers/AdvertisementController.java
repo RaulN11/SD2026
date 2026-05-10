@@ -3,20 +3,19 @@ package cars.microservice.CarsMicroservice.controllers;
 import cars.microservice.CarsMicroservice.dtos.AdRequestDTO;
 import cars.microservice.CarsMicroservice.dtos.AdResponseDTO;
 import cars.microservice.CarsMicroservice.dtos.CarResponseDTO;
-import cars.microservice.CarsMicroservice.export.ExportStrategyInterface;
+import cars.microservice.CarsMicroservice.export.AdExportTemplate;
 import cars.microservice.CarsMicroservice.models.Advertisement;
-import cars.microservice.CarsMicroservice.models.UserClient;
-import cars.microservice.CarsMicroservice.services.*;
+import cars.microservice.CarsMicroservice.services.AdvertisementCommandService;
+import cars.microservice.CarsMicroservice.services.AdvertisementQueryService;
+import cars.microservice.CarsMicroservice.services.ExportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.RequestPath;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +26,7 @@ import java.util.List;
 @RequestMapping("/ad/api")
 @RequiredArgsConstructor
 public class AdvertisementController {
+
     private final AdvertisementCommandService commandService;
     private final AdvertisementQueryService queryService;
     private final ExportService exportService;
@@ -74,17 +74,18 @@ public class AdvertisementController {
                                          @RequestParam String format) {
         try {
             List<Advertisement> ads = queryService.loadAdsByCar(brand, model, chassis);
-            ExportStrategyInterface strategy = exportService.getStrategy(format);
+            AdExportTemplate template = exportService.getStrategy(format);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=export" + strategy.getFileExtension())
-                    .contentType(MediaType.parseMediaType(strategy.getContentType()))
-                    .body(strategy.export(ads));
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=export" + template.getFileExtension())
+                    .contentType(MediaType.parseMediaType(template.getContentType()))
+                    .body(template.export(ads));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid format: " + format);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
+
     private AdResponseDTO convertToResponseDTO(Advertisement ad) {
         CarResponseDTO carDTO = new CarResponseDTO();
         carDTO.setId(ad.getCar().getId());
@@ -104,5 +105,4 @@ public class AdvertisementController {
                 ad.getImages()
         );
     }
-
 }
