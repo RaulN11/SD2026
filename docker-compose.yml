@@ -1,0 +1,71 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  postgres-users:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: usersdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1115
+    ports:
+      - "5433:5432"
+
+  postgres-cars:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: carsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1115
+    ports:
+      - "5434:5432"
+
+  users-microservice:
+    build: ./UsersMicroservice
+    ports:
+      - "8081:8081"
+    environment:
+      DB_PASSWORD: 1115
+      SECRET_KEY: UmF1bEVzdGVTbWVjaGVyU2lBY2Vhc3RhUGFyb2xhRXN0ZUZvYXJ0ZUdyZXVEZVNwYXJ0Cg==
+      internal.secret: very-strong-secret
+      spring.datasource.url: jdbc:postgresql://postgres-users:5432/usersdb
+    depends_on:
+      - postgres-users
+
+  cars-microservice:
+    build: ./CarsMicroservice
+    ports:
+      - "8082:8082"
+    environment:
+      DB_PASSWORD: 1115
+      SECRET_KEY: UmF1bEVzdGVTbWVjaGVyU2lBY2Vhc3RhUGFyb2xhRXN0ZUZvYXJ0ZUdyZXVEZVNwYXJ0Cg==
+      internal.secret: very-strong-secret
+      spring.datasource.url: jdbc:postgresql://postgres-cars:5432/carsdb
+      spring.rabbitmq.host: rabbitmq
+    depends_on:
+      - postgres-cars
+      - rabbitmq
+      - users-microservice
+
+  notifications-microservice:
+    build: ./NotifiactionsMicroservice
+    environment:
+      MAIL_ADDRESS: raulnicula2004@gmail.com
+      MAIL_APP_PASSWORD: hwvfzdzayualfapm
+      spring.rabbitmq.host: rabbitmq
+    depends_on:
+      - rabbitmq
+
+  frontend:
+    build: ./Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - users-microservice
+      - cars-microservice
