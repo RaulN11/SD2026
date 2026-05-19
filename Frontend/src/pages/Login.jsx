@@ -1,52 +1,55 @@
-import {useState}  from 'react'
-import {useNavigate, Link} from "react-router-dom"
-import {api} from "../api/api.js"
-import {formStyle, inputStyle, labelStyle, buttonStyle, pageWrapper, heroTitle}  from "../components/styles.js"
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { api } from '../api/api.js'
+import { formStyle, inputStyle, labelStyle, buttonStyle, pageWrapper, heroTitle } from '../components/styles.js'
+import { useLanguage } from '../context/LanguageContext'
 
-export default function Login(){
+export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
+    const { t } = useLanguage()
 
     const handleLogin = async () => {
-        try{
+        try {
             await api.login(email, password)
             navigate('/search')
-        }catch {
-            setError("Invalid email or password")
+        } catch {
+            setError(t('login_error'))
         }
     }
+
     return (
         <div style={pageWrapper}>
             <h2 style={heroTitle}>
-                Log in your <span style={{ color: 'orange' }}>CarKet</span> Account
+                {t('login_title')} <span style={{ color: 'orange' }}>CarKet</span>
             </h2>
             <div style={formStyle}>
-                <label style={labelStyle}>Email Address</label>
+                <label style={labelStyle}>{t('login_email')}</label>
                 <input
                     style={inputStyle}
                     type="email"
-                    placeholder="Email Address"
+                    placeholder={t('login_email')}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleLogin()}
                 />
-                <label style={labelStyle}>Password</label>
+                <label style={labelStyle}>{t('login_password')}</label>
                 <input
                     style={inputStyle}
                     type="password"
-                    placeholder="Password"
+                    placeholder={t('login_password')}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleLogin()}
                 />
                 {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
-                <button style={buttonStyle} onClick={handleLogin}>Login</button>
+                <button style={buttonStyle} onClick={handleLogin}>{t('login_button')}</button>
             </div>
             <div style={{ fontFamily: 'Oswald', fontSize: '20px', marginTop: '20px', textAlign: 'center' }}>
-                <p>New here? <Link to="/register" style={{ color: 'orange' }}>Create an account here</Link></p>
-                <p>Continue as a <Link to="/search" style={{ color: 'orange' }}>guest here.</Link></p>
+                <p>{t('login_new')} <Link to="/register" style={{ color: 'orange' }}>{t('login_create')}</Link></p>
+                <p>{t('login_guest')} <Link to="/search" style={{ color: 'orange' }}>{t('login_guest_link')}</Link></p>
             </div>
         </div>
     )

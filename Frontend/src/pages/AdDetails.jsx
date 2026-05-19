@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { api } from '../api/api.js'
+import { useLanguage } from "../context/LanguageContext.jsx"
 import { formStyle, inputStyle, labelStyle, buttonStyle } from '../components/styles'
 
 export default function AdDetails() {
@@ -11,6 +12,7 @@ export default function AdDetails() {
     const [showModal, setShowModal] = useState(false)
     const [newPrice, setNewPrice] = useState('')
     const [error, setError] = useState('')
+    const { t } = useLanguage()
 
     const email = api.getEmail()
     const role = api.getRole()
@@ -27,12 +29,12 @@ export default function AdDetails() {
     }, [id])
 
     const handleDelete = async () => {
-        if (!confirm('Delete this ad?')) return
+        if (!confirm(t('ad_delete_confirm'))) return
         try {
             await api.deleteAd(id)
             navigate('/search')
         } catch {
-            setError('Failed to delete ad.')
+            setError(t('ad_error_delete'))
         }
     }
 
@@ -42,12 +44,12 @@ export default function AdDetails() {
             setAd({ ...ad, price: parseInt(newPrice) })
             setShowModal(false)
         } catch {
-            setError('Failed to update price.')
+            setError(t('ad_error_price'))
         }
     }
 
-    if (loading) return <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>Loading...</p>
-    if (!ad) return <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>Ad not found.</p>
+    if (loading) return <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>{t('ad_loading')}</p>
+    if (!ad) return <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>{t('ad_not_found')}</p>
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -65,16 +67,16 @@ export default function AdDetails() {
                 )}
 
                 <p style={{ fontFamily: 'Oswald', fontSize: '20px', marginBottom: '10px' }}>
-                    <span style={{ color: 'orange' }}>Year:</span> {ad.year}
+                    <span style={{ color: 'orange' }}>{t('ad_year')}:</span> {ad.year}
                 </p>
                 <p style={{ fontFamily: 'Oswald', fontSize: '20px', marginBottom: '10px' }}>
-                    <span style={{ color: 'orange' }}>Price:</span> ${ad.price}
+                    <span style={{ color: 'orange' }}>{t('ad_price')}:</span> ${ad.price}
                 </p>
                 <p style={{ fontFamily: 'Oswald', fontSize: '20px', marginBottom: '10px' }}>
-                    <span style={{ color: 'orange' }}>Chassis:</span> {ad.car?.chassis}
+                    <span style={{ color: 'orange' }}>{t('ad_chassis')}:</span> {ad.car?.chassis}
                 </p>
                 <p style={{ fontFamily: 'Oswald', fontSize: '18px', marginBottom: '20px', color: '#ccc' }}>
-                    Seller: {ad.firstName} {ad.lastName}
+                    {t('ad_seller')}: {ad.firstName} {ad.lastName}
                 </p>
 
                 {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
@@ -83,14 +85,14 @@ export default function AdDetails() {
                     <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px', gap: '20px' }}>
                         {isOwner && (
                             <button style={buttonStyle} onClick={() => setShowModal(true)}>
-                                Edit Price
+                                {t('ad_edit_price')}
                             </button>
                         )}
                         <button
                             style={{ ...buttonStyle, backgroundColor: '#ff4444' }}
                             onClick={handleDelete}
                         >
-                            Delete
+                            {t('ad_delete')}
                         </button>
                     </div>
                 )}
@@ -108,8 +110,8 @@ export default function AdDetails() {
                             background: 'transparent', border: 'none', color: 'white',
                             fontSize: '28px', cursor: 'pointer'
                         }}>&times;</button>
-                        <h2 style={{ color: 'orange', marginBottom: '20px' }}>Edit Price</h2>
-                        <label style={labelStyle}>New Price</label>
+                        <h2 style={{ color: 'orange', marginBottom: '20px' }}>{t('ad_edit_price')}</h2>
+                        <label style={labelStyle}>{t('ad_new_price')}</label>
                         <input
                             style={inputStyle}
                             type="number"
@@ -117,7 +119,7 @@ export default function AdDetails() {
                             onChange={e => setNewPrice(e.target.value)}
                         />
                         <button style={{ ...buttonStyle, width: '100%' }} onClick={handleUpdatePrice}>
-                            Save
+                            {t('ad_save')}
                         </button>
                     </div>
                 </div>

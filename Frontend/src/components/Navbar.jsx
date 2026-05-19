@@ -1,10 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { api } from '../api/api.js'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Navbar() {
     const navigate = useNavigate()
     const [loggedIn, setLoggedIn] = useState(api.isLoggedIn())
+
+
+    const { currentLang, changeLanguage, t } = useLanguage()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -18,6 +22,15 @@ export default function Navbar() {
         setLoggedIn(false)
         navigate('/login')
     }
+    const flagStyle = (l) => ({
+        width: '30px',
+        height: '20px',
+        cursor: 'pointer',
+        borderRadius: '4px',
+        objectFit: 'cover',
+        border: currentLang === l ? '2px solid rgb(234,123,16)' : '2px solid transparent',
+        transition: 'border 0.2s ease'
+    })
 
     return (
         <div style={{
@@ -51,6 +64,26 @@ export default function Navbar() {
                         <i className="fa-solid fa-user" style={{ color: 'rgb(234,123,16)', fontSize: '25px' }}></i>
                     </Link>
                 )}
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <img
+                        src="https://flagcdn.com/gb.svg"
+                        alt="English"
+                        style={flagStyle('en')}
+                        onClick={() => changeLanguage('en')}
+                    />
+                    <img
+                        src="https://flagcdn.com/ro.svg"
+                        alt="Romanian"
+                        style={flagStyle('ro')}
+                        onClick={() => changeLanguage('ro')}
+                    />
+                    <img
+                        src="https://flagcdn.com/cn.svg"
+                        alt="Chinese"
+                        style={flagStyle('zh')}
+                        onClick={() => changeLanguage('zh')}
+                    />
+                </div>
                 {loggedIn && (
                     <button onClick={handleLogout} style={{
                         background: 'transparent',
@@ -59,7 +92,7 @@ export default function Navbar() {
                         color: 'white',
                         fontFamily: 'Oswald',
                         fontSize: '18px'
-                    }}>Logout</button>
+                    }}>{t('nav_logout')}</button>
                 )}
             </div>
         </div>

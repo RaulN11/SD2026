@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { api } from '../api/api.js'
+import {useLanguage} from "../context/LanguageContext.jsx";
 
 export default function Results() {
     const [searchParams] = useSearchParams()
@@ -8,6 +9,7 @@ export default function Results() {
     const [loading, setLoading] = useState(true)
     const [showExport, setShowExport] = useState(false)
     const [format, setFormat] = useState('')
+    const { t } = useLanguage()
 
     const brand = searchParams.get('brand') || ''
     const model = searchParams.get('model') || ''
@@ -20,7 +22,7 @@ export default function Results() {
     }, [brand, model, chassis])
 
     const handleExport = () => {
-        if (!format) { alert('Please select a format!'); return }
+        if (!format) { alert(t('results_export_select')); return }
         api.exportAds(brand, model, chassis, format)
         setShowExport(false)
     }
@@ -29,18 +31,18 @@ export default function Results() {
         <div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h2 style={{ fontFamily: 'Oswald', fontSize: '40px', margin: '20px 0' }}>
-                    Your <span style={{ color: 'orange' }}>results:</span>
+                    {t('results_title')} <span style={{ color: 'orange' }}>{t('results_title_accent')}</span>
                 </h2>
                 <button onClick={() => setShowExport(true)} style={{
                     fontFamily: 'Oswald', cursor: 'pointer', backgroundColor: 'orange',
                     borderRadius: '10px', fontSize: '20px', color: 'rgb(74,72,72)',
                     border: 'none', padding: '5px 10px'
-                }}>Export results</button>
+                }}>{t('results_export')}</button>
             </div>
 
-            {loading && <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>Loading...</p>}
+            {loading && <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>{t('results_loading')}</p>}
             {!loading && ads.length === 0 && (
-                <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>No ads found.</p>
+                <p style={{ textAlign: 'center', fontFamily: 'Oswald', fontSize: '24px', marginTop: '40px' }}>{t('results_none')}</p>
             )}
 
             <div style={{
@@ -87,7 +89,7 @@ export default function Results() {
                             background: 'transparent', color: 'orange', border: 'none',
                             fontSize: '40px', alignSelf: 'flex-end', cursor: 'pointer'
                         }}>&times;</button>
-                        <h2 style={{ fontFamily: 'Oswald', fontSize: '30px', marginBottom: '30px' }}>Choose the exporting format</h2>
+                        <h2 style={{ fontFamily: 'Oswald', fontSize: '30px', marginBottom: '30px' }}>{t('results_export_title')}</h2>
                         <div style={{ display: 'flex', gap: '30px', marginBottom: '40px', fontFamily: 'Oswald', fontSize: '20px' }}>
                             {['JSON', 'XML', 'CSV'].map(f => (
                                 <label key={f} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -100,7 +102,7 @@ export default function Results() {
                             fontFamily: 'Oswald', cursor: 'pointer', backgroundColor: 'orange',
                             borderRadius: '10px', fontSize: '20px', color: 'rgb(74,72,72)',
                             border: 'none', padding: '8px 20px'
-                        }}>Export</button>
+                        }}>{t('results_export_button')}</button>
                     </div>
                 </div>
             )}
