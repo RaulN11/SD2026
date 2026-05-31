@@ -94,7 +94,6 @@ export default function AdDetails() {
                     </div>
                 </div>
 
-                {/* Right — info panel */}
                 <div className="card" style={{ padding: '28px' }}>
                     <span className="badge badge-primary" style={{ marginBottom: '12px' }}>{ad.car?.chassis}</span>
                     <h1 style={{ fontSize: '28px', fontWeight: 800, letterSpacing: '-0.5px', marginBottom: '8px' }}>
@@ -150,7 +149,6 @@ export default function AdDetails() {
                 </div>
             </div>
 
-            {/* Edit price modal */}
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="modal fade-in" onClick={e => e.stopPropagation()}>

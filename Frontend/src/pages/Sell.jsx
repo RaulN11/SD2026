@@ -33,7 +33,6 @@ export default function Sell() {
 
     return (
         <div className="fade-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 24px' }}>
-            {/* Page header — centered */}
             <div style={{ width: '100%', maxWidth: 640, marginBottom: '28px', textAlign: 'center' }}>
                 <h1 className="page-title">
                     {t('sell_title')} <span className="gradient-text">{t('sell_title_accent')}</span>
@@ -41,7 +40,6 @@ export default function Sell() {
                 <p className="page-sub">Fill in your car's details and publish your listing.</p>
             </div>
 
-            {/* Form card — centered */}
             <div style={{ width: '100%', maxWidth: 640 }}>
                 <div className="card" style={{ padding: '32px' }}>
                     <h2 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '24px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>

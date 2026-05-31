@@ -95,8 +95,6 @@ export default function Results() {
                     </Link>
                 ))}
             </div>
-
-            {/* Export modal */}
             {showExport && (
                 <div className="modal-overlay" onClick={() => setShowExport(false)}>
                     <div className="modal fade-in" onClick={e => e.stopPropagation()}>

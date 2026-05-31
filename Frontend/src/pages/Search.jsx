@@ -21,7 +21,6 @@ export default function Search() {
 
     return (
         <div style={{ flex: 1 }}>
-            {/* Hero */}
             <div className="hero">
                 <div className="hero-eyebrow">
                     <i className="fa-solid fa-car" />
@@ -33,7 +32,6 @@ export default function Search() {
                 </h1>
                 <p className="hero-sub">{t('search_hero_sub')}</p>
 
-                {/* Search box */}
                 <div className="search-box fade-in">
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '16px' }}>
                         <div>
@@ -73,7 +71,6 @@ export default function Search() {
                 </div>
             </div>
 
-            {/* Stats strip */}
             <div style={{
                 maxWidth: 560, margin: '0 auto 40px', padding: '0 24px',
                 display: 'flex', justifyContent: 'space-around'

@@ -74,7 +74,6 @@ export default function Chat() {
 
     return (
         <div className="chat-layout">
-            {/* Sidebar */}
             <div className="chat-sidebar">
                 <div className="chat-sidebar-header">
                     <h2 style={{ fontSize: '16px', fontWeight: 700 }}>{t('chat_title')}</h2>
@@ -101,7 +100,7 @@ export default function Chat() {
                 </div>
             </div>
 
-            {/* Main */}
+
             <div className="chat-main">
                 {!activeConv ? (
                     <div className="chat-empty">
