@@ -59,7 +59,6 @@ export default function AdDetails() {
 
     return (
         <div className="page fade-in">
-            {/* Back */}
             <Link to="/results" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '14px', fontWeight: 500, marginBottom: '24px' }}>
                 <i className="fa-solid fa-arrow-left" /> {t('ad_back')}
             </Link>
@@ -67,7 +66,6 @@ export default function AdDetails() {
             <ErrorMessage message={error} />
 
             <div className="ad-detail-grid">
-                {/* Left — image */}
                 <div>
                     {ad.images?.length > 0
                         ? <img className="ad-detail-img" src={`http://localhost:8082${ad.images[0]}`} alt="Car" />
@@ -76,7 +74,6 @@ export default function AdDetails() {
                         </div>
                     }
 
-                    {/* Specs grid */}
                     <div className="spec-grid">
                         {[
                             [t('ad_year'),    ad.year,                          'fa-calendar'],
